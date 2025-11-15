@@ -99,61 +99,7 @@ public class DataStreamJob {
 								);
 								}});
 //		OrderDetail.print();
-
-
-
-
-/*
-
-
-		FileSource<String> source2 = FileSource
-					.forRecordStreamFormat(new TextLineInputFormat(),new Path("C:\\Users\\Radosław\\Desktop\\mini-data-projects\\Project_4_FlinkBatch\\FlinkOrder\\Datasets\\Orders.csv"))
-					.build();
-
-		DataStream<String> lines = env.fromSource(
-				source2,
-				WatermarkStrategy.noWatermarks(),
-				"Orders"
-		);
-
-		var lines2=lines.filter(line -> !line.startsWith("Order ID"));
-
-		lines2.print();
-
-		DataStream<Orders> orders = lines.map(record -> {
-			String[] arr = record.split(",");
-
-			String Order_Id= String.valueOf((arr[0]));
-			String Customer_Id= arr[1];
-			String Resturant_Id = arr[2];
-//			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			DateFormat dateFormat = new SimpleDateFormat("d/m/yyyy HH:mm");
-			Date date = dateFormat.parse(arr[3]);
-			Instant instant = date.toInstant();
-			Date Order_Date=Date.from(instant);
-			int Quantity_of_Items= Integer.parseInt(arr[4]);
-			int Order_Amount = Integer.parseInt(arr[5]);
-			String Payment_Mode = arr[6];
-			int Delivery_Time = Integer.parseInt(arr[7]);
-			int Customer_Rating_Food= Integer.parseInt(arr[8]);
-			int Customer_Rating_Delivery= Integer.parseInt(arr[9]);
-
-return new Orders( Order_Id,  Customer_Id,Resturant_Id,Order_Date,Quantity_of_Items,Order_Amount,Payment_Mode,Delivery_Time,Customer_Rating_Food,Customer_Rating_Delivery);
-		}).returns(Orders.class);
-		orders.print();
-*/
-
-
-
-
-
-
-
-//		orders.print();
-////		DataSet<String> orders = env.readFile("Datasets/Orders.csv");
-//		FileSource<String> source2 = FileSource
-//				.forRecordStreamFormat(new TextLineInputFormat(), new Path("Datasets/Orders.csv"))
-//				.build();
+ 
 		env.execute("Flink Java API Skeleton");
 	}
 }
