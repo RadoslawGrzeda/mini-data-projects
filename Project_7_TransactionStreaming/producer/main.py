@@ -23,20 +23,24 @@ def error(msg):
     print('Something went wrong with kafka send')
 
 
-def send_mess(mes):
-    for i in range(10):
-        try:
+def send_mess():
+    try:
+        for i in range(10):
             transaction=transactionObject.generate_transaction()
             producer.send(topic,transaction).add_callback(success).add_errback(error)
             print(transaction)
             print("--------------------------------")
-        except Exception (e) :
-            print(f"Something wrong {e}")
+            sleep(1)
+    except Exception as e:
+        print(f"Something wrong {e}")
+    finally:
+        producer.flush()
+        producer.close()
 
 
 
 if __name__ == '__main__':
-    send_mess('ss')
+    send_mess()
 
 
 
