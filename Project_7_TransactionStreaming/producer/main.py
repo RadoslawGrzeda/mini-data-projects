@@ -31,10 +31,10 @@ def send_mess():
             print(transaction)
             print("--------------------------------")
             sleep(1)
+        producer.flush()
     except Exception as e:
         print(f"Something wrong {e}")
     finally:
-        producer.flush()
         producer.close()
 
 
