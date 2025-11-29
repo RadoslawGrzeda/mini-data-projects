@@ -1,3 +1,0 @@
-kafka-python>=2.0.2
-Faker>=18.0.0
-python-dotenv>=1.0.0
