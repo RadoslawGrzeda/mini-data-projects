@@ -25,7 +25,7 @@ def error(msg):
 
 def send_mess():
     try:
-        for i in range(10):
+        for i in range(200):
             transaction=transactionObject.generate_transaction()
             producer.send(topic,transaction).add_callback(success).add_errback(error)
             print(transaction)

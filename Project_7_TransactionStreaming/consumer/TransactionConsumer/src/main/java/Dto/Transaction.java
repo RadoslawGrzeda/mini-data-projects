@@ -1,6 +1,9 @@
 package Dto;
 
+import org.apache.flink.runtime.rpc.Local;
+
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 public class Transaction {
 
