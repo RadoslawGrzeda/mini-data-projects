@@ -4,35 +4,50 @@ import os
 import re 
 load_dotenv()
 
-# def load_data(file_path):
-#     try:
+class Customer:
+    def __init__(self,file_path):
+        self.file_path=file_path
+        self.df= None
 
-#     except Exception as e:
-def emailTransform(email):
-    match=re.search(r"_([a-zA-Z0-9+!@#$%^]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.].)" ,email)
-    return match.group(1)
+    def load_data(self):
+        try:
+            self.df=pd.read_csv(self.file_path)
+            return self.df
+        except Exception as e:
+            print(f"Something went wrong with load step {e}")
+
+    def emailTransform(self, email):
+        match=re.search(r"_([a-zA-Z0-9+!@#$%^]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.].)" ,email)
+        return match.group(1)
+
+    def extractDevice(self, device):
+        if re.search(r'(Android)',device):
+            return 'Android' 
+        if re.search(r'(Mac)',device):
+            return 'Mac' 
+        else:
+            return 'Something new'
+
+    def processData(self):
+        self.df['username']=self.df['username'].apply(lambda x : x[-12:])
+        self.df['email']=self.df['email'].apply(lambda x : self.emailTransform(x))
+        self.df['device_version']=self.df['device_version'].apply(lambda x : self.extractDevice(x))
+        return self.df
+
+cust = Customer(file_path='data/customer.csv')
+cust.load_data()
+dfcust = cust.processData()
+print(dfcust.head())
+# print(cust.df.head())
 
 
-def extractDevice(device):
-    if re.search(r'(Android)',device):
-        return 'Android' 
-    if re.search(r'(Mac)',device):
-        return 'Mac' 
-    else:
-        return 'Something new'
+
 #         print(f"Something went wrong with load step {e}")
-file_path='data/customer.csv'
-df= pd.read_csv(file_path)
 # print(df.columns)
 # print(df['username'])
 
-df['username']=df['username'].apply(lambda x : x[-12:])
-df['email']=df['email'].apply(lambda x : emailTransform(x))
-df['device_version']=df['device_version'].apply(lambda x : extractDevice(x))
 # print(df['device_version'].unique())
 # print(df['device_version'])
-dane=df.groupby(['device_version']).size()
-print(dane)
 # print(df)
 
      
